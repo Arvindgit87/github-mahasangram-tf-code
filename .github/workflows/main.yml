@@ -1,0 +1,33 @@
+name: Terraform CI/CD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    name: Terraform Init, Plan, Apply
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.7
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Macbet -  Terraform Login
+  # You may pin to the exact commit or the version.
+  # uses: Macbet/login-terraform@2f866de27bf9044df2a942cd61c0c6afa75c2a3f
+          uses: Macbet/login-terraform@1.0.0  
+  with:
+    # A list of hostname and token pairs for HCP Terraform/Terraform Enterprise instances to place within the credentials block of the Terraform CLI configuration file.
+    cli_config_credentials_list: # default is [{"hostname": "app.terraform.io", "token": ""}]
+                  
+
+      - name: Terraform Plan
+        run: terraform plan
